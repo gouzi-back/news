@@ -1,4 +1,4 @@
-package com.edu.dao;
+package com.edu.jdbcJiChu;
 
 
 import java.sql.*;
