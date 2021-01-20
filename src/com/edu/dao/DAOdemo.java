@@ -9,7 +9,7 @@ import java.util.Date;
  * @Description:com.edu.dao
  * @Version: 1.0
  */
-/*使用jdbc增删改查
+/*使用jdbc增删改查  3-DAO模式及单例模式
  * */
 public class DAOdemo {
 
