@@ -27,7 +27,7 @@ public class Test {
 //        pd.updateNews(3,"我笑了呀 手术室护士水水水水");
 //        System.out.println("======================================================================================");
         //删除
-        pd.deleteNews(5);
+//        pd.deleteNews(5);
 
 
     }

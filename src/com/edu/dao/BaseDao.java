@@ -2,6 +2,11 @@ package com.edu.dao;
 
 import com.edu.util.ConfigManager;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.sql.*;
 
 /**
@@ -56,6 +61,27 @@ public class BaseDao {
         return true;
     }
 
+
+    //获取数据库连接第二种方法
+    public boolean getConnection2() {
+    //  初始化上下文
+        try {
+            Context context= new InitialContext();
+            //获取与逻辑名称相关的数据源对象
+            DataSource dataSource =(DataSource)context.lookup("java:comp/env/jdbc/news");
+            //通过数据源 获取数据库连接
+            connection =dataSource.getConnection();
+
+
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return true;
+    }
+
     //  增删改 返回int
     public int addDelUpdate(String sql,Object[] params){
         //返回几条成功的语句 int 类型
@@ -96,6 +122,27 @@ public class BaseDao {
         }
         return resultSet;
     }
+
+    //  查 通过数据源链接查询
+    public ResultSet selectSql2(String sql,Object[] params){
+        //if判断是否获得连接  this.getConnection2()
+        if (this.getConnection2()){
+            try {
+                preparedStatement=connection.prepareStatement(sql);
+                //填充占位符
+                for (int i = 0; i <params.length ; i++) {
+                    preparedStatement.setObject(i+1,params[i]);
+
+                }
+                //执行返回的结果给resultSet
+                resultSet=preparedStatement.executeQuery();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
     // 释放资源
     public boolean closeResource(){
         if (resultSet!=null){
