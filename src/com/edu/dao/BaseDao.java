@@ -1,5 +1,7 @@
 package com.edu.dao;
 
+import com.edu.util.ConfigManager;
+
 import java.sql.*;
 
 /**
@@ -20,12 +22,30 @@ public class BaseDao {
     //获取数据库连接
     public boolean getConnection() {
 
-        try {
+       /* //老的写法
+       try {
             // class.forName(String) 加载不同数据库厂商提供的驱动
             Class.forName("com.mysql.jdbc.Driver");
             //1.获取链接 connection
             String url = "jdbc:mysql://localhost:3306/kgcnews?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true";
             connection = DriverManager.getConnection(url, "root", "1234");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;*/
+            //新的写法
+        try {
+            // class.forName(String) 加载不同数据库厂商提供的驱动
+            Class.forName(ConfigManager.getInstance().getString("jdbc.driver"));
+            //1.获取链接 connection
+            String url = ConfigManager.getInstance().getString("jdbc.connection.url");
+            String username = ConfigManager.getInstance().getString("jdbc.connection.username");
+            String password = ConfigManager.getInstance().getString("jdbc.connection.password");
+            connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return false;
