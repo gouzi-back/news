@@ -1,4 +1,4 @@
-package com.edu.jdbcJiChu;
+package com.jichu.jdbcJiChu;
 
 
 import java.sql.*;
